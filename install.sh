@@ -5,7 +5,7 @@
 set -e
 
 # Configuration
-REPO_URL="${REPO_URL:-https://github.com/YOUR_USERNAME/ContextoForJava.git}"
+REPO_URL="${REPO_URL:-https://github.com/santiagovOK/ContextoForJava.git}"
 INSTALL_DIR="$HOME/.contextoForJava"
 BRANCH="main"
 
