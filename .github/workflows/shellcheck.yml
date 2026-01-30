@@ -2,9 +2,9 @@ name: ShellCheck
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
 
 jobs:
   shellcheck:
@@ -15,4 +15,5 @@ jobs:
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@master
         with:
-          scandir: './bin'
+          # Scan the root directory (recursively finds install.sh and bin/*.sh)
+          scandir: '.'

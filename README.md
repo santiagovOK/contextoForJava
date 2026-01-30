@@ -10,12 +10,22 @@ An **experimental**, modular, rule-based context generator for Java/Spring Boot 
 
 ## Installation & Usage
 
+### 🚀 Quick Install (Recommended)
+
+Run this one-line command to install the tool to `~/.contextoForJava`:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/santiagovOK/ContextoForJava/main/install.sh | bash
+```
+
+### 🛠️ Manual Install
+
 1.  Clone this repository or copy the files to your machine.
 2.  Navigate to your target Java project.
 3.  Run the initialization script:
 
 ```bash
-/path/to/ContextoForJava/bin/contexto-init.sh
+ContextoForJava/bin/contexto-init.sh
 ```
 
 4.  Follow the interactive prompts to generate the `AGENTS.md` map and layer-specific rule files.
@@ -33,5 +43,8 @@ ContextoForJava/
 └── README.md
 ```
 
+## ⚠️ Disclaimer
+I am currently a Junior Java Developer, so some of these rules might not perfectly reflect advanced industry standards or edge cases. If you spot a bad practice or a better way to do things, please open an issue or pull request. This project is also a learning journey for me.
+
 ## Contributing
-We welcome contributions! Please see `.github/ISSUE_TEMPLATE` for how to report bugs or suggest new rules.
+I welcome contributions! Please see `.github/ISSUE_TEMPLATE` for how to report bugs or suggest new rules.

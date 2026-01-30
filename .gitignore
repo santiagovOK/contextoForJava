@@ -1,0 +1,26 @@
+# OS System Files
+.DS_Store
+Thumbs.db
+._*
+
+# Editors & IDEs
+.idea/
+.vscode/
+*.iml
+*.swp
+*~
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+
+# Java/Maven/Gradle (For the examples/ directory)
+target/
+build/
+.gradle/
+*.class
+*.jar
+*.war
