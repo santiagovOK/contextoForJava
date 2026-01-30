@@ -27,7 +27,7 @@ if [ -d "src/main/java" ]; then
 fi
 
 echo -e "\n📍 We need to know where to place the code rules (your base package)."
-read -p "   Enter the package path (Press Enter for '$DEFAULT_DIR'): " USER_PKG_PATH
+read -r -p "   Enter the package path (Press Enter for '$DEFAULT_DIR'): " USER_PKG_PATH
 BASE_PKG="${USER_PKG_PATH:-$DEFAULT_DIR}"
 
 echo "📂 Setting up rules in: $BASE_PKG"
@@ -117,7 +117,7 @@ echo "   ✅ Created: AGENTS.md (Master File)"
 
 # 4. Git Configuration (.gitignore)
 echo -e "\n🛡️  Git Configuration"
-read -p "❓ Do you want to add these files (AGENTS.md, skills/, etc.) to .gitignore? [y/N] " ADD_TO_GIT
+read -r -p "❓ Do you want to add these files (AGENTS.md, skills/, etc.) to .gitignore? [y/N] " ADD_TO_GIT
 
 if [[ "$ADD_TO_GIT" =~ ^[Yy]$ ]]; then
     if [ ! -f .gitignore ]; then
