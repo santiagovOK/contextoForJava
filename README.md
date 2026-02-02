@@ -36,12 +36,17 @@ ContextoForJava/bin/contexto-init.sh
 ContextoForJava/
 ├── .github/          # CI and Templates
 ├── bin/              # Executable scripts
+├── docs/             # Extended guides and best practices
 ├── templates/        # The "Gold Standard" rules
 │   ├── java/         # Java layer-specific rules
 │   └── roles/        # Persona-based context
 ├── examples/         # Sample project structure
 └── README.md
 ```
+
+## 📚 Documentation
+
+- **[Dependency Management & OOP Best Practices](docs/dependency-management-best-practices.md)** - Comprehensive guide on managing dependencies, applying the Tell Don't Ask principle, and writing maintainable object-oriented code.
 
 ## ⚠️ Disclaimer
 I am currently a Junior Java Developer, so some of these rules might not perfectly reflect advanced industry standards or edge cases. If you spot a bad practice or a better way to do things, please open an issue or pull request. This project is also a learning journey for me.
