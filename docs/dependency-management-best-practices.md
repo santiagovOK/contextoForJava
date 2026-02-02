@@ -88,6 +88,116 @@ public void coolDownIfNecessary() {
 
 **• Expose Behavior, Not Data:** Classes should expose what they can do (methods), not what they have (getters for all attributes).
 
+#### Criteria for Determining Necessary vs Unnecessary Getters and Setters
+
+Understanding when to expose getters and setters is crucial for maintaining proper encapsulation. Follow these criteria:
+
+##### Criteria for Unnecessary Setters
+
+**Natural Immutability**
+- **Unique identifiers**: IMEI, ID numbers, serial numbers
+- **Fixed physical characteristics**: brand, model, hardware specifications
+- **Data that doesn't change by the nature of the object**
+
+**Data Integrity**
+- **Attributes critical for system consistency**
+- **Values that could break relationships between objects if changed**
+- **Information that must remain constant during the lifecycle**
+
+**Example:**
+```java
+public class Phone {
+    private final String imei;  // No setter - immutable identifier
+    private final String brand; // No setter - fixed characteristic
+    private String ownerName;   // Setter OK - can change ownership
+    
+    public Phone(String imei, String brand) {
+        this.imei = imei;
+        this.brand = brand;
+    }
+    
+    // Getter for immutable data is OK
+    public String getImei() { return imei; }
+    
+    // Setter for mutable data
+    public void setOwnerName(String ownerName) { 
+        this.ownerName = ownerName; 
+    }
+}
+```
+
+##### Criteria for Unnecessary Getters
+
+**Strict Encapsulation**
+- **Internal data that doesn't need external exposure**
+- **Technical information used only by the class itself**
+- **Attributes that are not part of the necessary public interface**
+
+**Single Responsibility Principle**
+- **Data that is not the responsibility of other classes to know**
+- **Information that breaks abstraction if exposed**
+
+**Example:**
+```java
+public class BankAccount {
+    private double balance;
+    private List<Transaction> transactionLog; // Internal detail
+    
+    // ❌ Don't expose internal collection
+    // public List<Transaction> getTransactionLog() { ... }
+    
+    // ✅ Expose behavior instead
+    public int getTransactionCount() {
+        return transactionLog.size();
+    }
+    
+    public Transaction getLastTransaction() {
+        return transactionLog.isEmpty() ? null : 
+               transactionLog.get(transactionLog.size() - 1);
+    }
+}
+```
+
+##### Criteria for Maintaining Getters/Setters
+
+**Essential Functionality**
+- **Data necessary for business logic**
+- **Information required by other collaborating classes**
+- **Attributes that participate in system operations**
+
+**Model Flexibility**
+- **Values that can legitimately change** (e.g., username)
+- **States that evolve during execution**
+- **Modifiable object configurations**
+
+**Example:**
+```java
+public class UserProfile {
+    private String email;        // Getter/Setter - can change
+    private String displayName;  // Getter/Setter - can change
+    private LocalDate registrationDate; // Getter only - shouldn't change
+    
+    // Legitimate getters/setters for mutable data
+    public String getEmail() { return email; }
+    public void setEmail(String email) { 
+        validateEmail(email);
+        this.email = email; 
+    }
+    
+    public String getDisplayName() { return displayName; }
+    public void setDisplayName(String displayName) { 
+        this.displayName = displayName; 
+    }
+    
+    // Getter only for immutable data
+    public LocalDate getRegistrationDate() { 
+        return registrationDate; 
+    }
+}
+```
+
+**Fundamental Principle:** Only expose what truly needs to be accessible or modifiable from the outside, maintaining encapsulation and data model integrity.
+
 ### 3. Low Coupling and High Cohesion
 
 These are fundamental principles in OOP that should be maintained in all interactions between classes:

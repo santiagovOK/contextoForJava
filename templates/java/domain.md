@@ -9,3 +9,12 @@
 - **Use Constants**: Define business rules and magic numbers as `static final` constants (e.g., `MAX_INSTALLMENTS`, `SURCHARGE_RATE`).
 - **Encapsulation**: Keep attributes private. Only expose getters/setters when necessary for the object's API.
 - **Rich Domain Models**: Methods like `isEligibleForDiscount()`, `calculateTotal()`, or `canBeProcessed()` belong in the domain object, not in a service that asks for data.
+
+## Getters and Setters Guidelines
+- **Avoid unnecessary setters** for immutable identifiers (ID, IMEI, serial numbers) and fixed characteristics.
+- **Avoid unnecessary getters** for internal implementation details that break encapsulation.
+- **Use `final` fields** for attributes that shouldn't change after construction.
+- **Provide setters only** for attributes that legitimately need to change during the object's lifecycle.
+- **Expose behavior over data**: Instead of `getEngine()`, provide `startEngine()`, `isTooHot()`, etc.
+
+See `docs/dependency-management-best-practices.md` for detailed criteria on determining necessary vs unnecessary getters/setters.
