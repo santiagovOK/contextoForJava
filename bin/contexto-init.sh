@@ -71,6 +71,14 @@ install_rule "$TEMPLATE_DIR/java/utils.md"       "$BASE_PKG/util/AGENTS-UTILS.md
 install_rule "$TEMPLATE_DIR/java/config.md"      "src/main/resources/AGENTS-CONFIG.md"
 install_rule "$TEMPLATE_DIR/java/testing.md"     "src/test/AGENTS-TESTING.md"
 
+# Documentation & Guidelines
+DOCS_DIR="$(dirname "$SCRIPT_DIR")/docs"
+if [ -d "$DOCS_DIR" ]; then
+    mkdir -p "docs"
+    install_rule "$DOCS_DIR/dependency-management-best-practices.md" "docs/AGENTS-OOP-BEST-PRACTICES.md"
+    install_rule "$DOCS_DIR/umlet-diagram-guidelines.md" "docs/AGENTS-UML-GUIDELINES.md"
+fi
+
 # Generate Skills (Expert Roles)
 install_rule "$TEMPLATE_DIR/roles/architect.md"         "skills/SPRING-ARCHITECT.md"
 install_rule "$TEMPLATE_DIR/roles/performance-tuner.md" "skills/JAVA-PERFORMANCE.md"
@@ -105,6 +113,10 @@ cat <<EOF > AGENTS.md
 - **Data Layer**: [Repositories](./$BASE_PKG/persistence/AGENTS-DATA.md)
 - **Domain Layer**: [Entities/DTOs](./$BASE_PKG/domain/AGENTS-DOMAIN.md)
 - **Testing**: [Standards](./src/test/AGENTS-TESTING.md)
+
+## Best Practices & Guidelines
+- **[OOP Best Practices](./docs/AGENTS-OOP-BEST-PRACTICES.md)**: Dependency management, Tell Don't Ask, encapsulation, getters/setters criteria, 1-to-1 relationships
+- **[UML Guidelines](./docs/AGENTS-UML-GUIDELINES.md)**: UMLet diagram construction with XML syntax rules
 
 ## Git Guidelines
 - [Conventional Commits](./AGENTS-GIT.md)
@@ -142,6 +154,7 @@ if [[ "$ADD_TO_GIT" =~ ^[Yy]$ ]]; then
     add_ignore "AGENTS.md"
     add_ignore "AGENTS-*.md"
     add_ignore "skills/"
+    add_ignore "docs/AGENTS-*.md"
     add_ignore "**/*AGENTS-*.md"
     
     echo "✅ .gitignore updated successfully."
