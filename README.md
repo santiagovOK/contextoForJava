@@ -47,6 +47,7 @@ ContextoForJava/
 ## 📚 Documentation
 
 - **[Dependency Management & OOP Best Practices](docs/dependency-management-best-practices.md)** - Comprehensive guide on managing dependencies, applying the Tell Don't Ask principle, and writing maintainable object-oriented code.
+- **[UMLet Diagram Guidelines](docs/umlet-diagram-guidelines.md)** - Complete instructions for creating UML class diagrams with UMLet, including XML syntax rules and best practices.
 
 ## ⚠️ Disclaimer
 I am currently a Junior Java Developer, so some of these rules might not perfectly reflect advanced industry standards or edge cases. If you spot a bad practice or a better way to do things, please open an issue or pull request. This project is also a learning journey for me.

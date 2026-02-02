@@ -17,4 +17,12 @@
 - **Provide setters only** for attributes that legitimately need to change during the object's lifecycle.
 - **Expose behavior over data**: Instead of `getEngine()`, provide `startEngine()`, `isTooHot()`, etc.
 
-See `docs/dependency-management-best-practices.md` for detailed criteria on determining necessary vs unnecessary getters/setters.
+## Relationship Implementation Guidelines
+- **Composition**: Container class creates and owns the contained object. No setter for the contained object.
+- **Bidirectional Association**: Both classes reference each other. Setters must maintain consistency automatically.
+- **Respect relationship structure**: Don't create direct relationships not specified in your design.
+- **Encapsulate navigation**: Provide behavior methods instead of exposing getter chains.
+
+See `docs/dependency-management-best-practices.md` for detailed criteria on:
+- Determining necessary vs unnecessary getters/setters
+- Implementing 1-to-1 relationships (composition and bidirectional associations)

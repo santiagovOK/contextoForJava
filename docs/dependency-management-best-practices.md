@@ -290,6 +290,258 @@ double surcharge = amount * SURCHARGE_RATE;
 
 **• Refactor Continuously:** Don't be afraid to refactor as you learn more about the domain and the problem you're solving.
 
+## Implementing 1-to-1 Relationships in OOP
+
+Understanding how to properly implement different types of 1-to-1 relationships is crucial for creating well-structured object-oriented systems.
+
+### Types of Relationships to Implement
+
+#### Composition
+
+**• Definition:** A class "contains" and is responsible for the lifecycle of another class
+
+**• UML:** Filled diamond ◆—→
+
+**• Implementation:** The container object creates the contained object in its constructor
+
+**• Example:** `Passport → Photo` (the passport creates and manages the photo)
+
+#### Bidirectional Association
+
+**• Definition:** Both classes know each other mutually
+
+**• UML:** Arrows on both ends ←—→
+
+**• Implementation:** Both classes have a reference to each other + methods that maintain consistency
+
+**• Example:** `Passport ↔ Owner` (navigation in both directions)
+
+### Design Principles for Relationships
+
+#### 1. Respect the Relationship Structure
+
+```java
+// ✅ Correct: Respect specified relationships
+owner.getPassport().getPhoto()  // Owner → Passport → Photo
+
+// ❌ Incorrect: Create direct relationships not specified  
+owner.getPhoto()  // Direct relationship Owner → Photo (doesn't exist)
+```
+
+#### 2. Tell, Don't Ask (Applied to Relationships)
+
+```java
+// ❌ Violation: Chain of getters (Ask, Ask, Ask)
+System.out.println("Photo: " + owner.getPassport().getPhoto().getImage());
+
+// ✅ Correct application: Delegate behavior
+owner.showCompleteInformation();  // Tell
+```
+
+#### 3. Bidirectional Consistency
+
+```java
+public void setPassport(Passport passport) {
+    this.passport = passport;
+    // ✅ Maintain consistency automatically
+    if (passport != null && passport.getOwner() != this) {
+        passport.setOwner(this);
+    }
+}
+```
+
+### Implementation Criteria
+
+#### Composition (Container Class)
+
+**Requirements:**
+1. **Constructor:** Must create the contained object
+2. **Getter:** Provide access to the contained object
+3. **Behavior:** Methods that delegate operations to the contained object
+4. **No Setter:** The contained object should not be replaceable externally
+
+**Example:**
+```java
+public class Passport {
+    private String number;
+    private String issueDate;
+    private Photo photo;  // Composition
+    
+    // ✅ Create the contained object in the constructor
+    public Passport(String number, String issueDate, String image, String format) {
+        this.number = number;
+        this.issueDate = issueDate;
+        this.photo = new Photo(image, format);  // Composition
+    }
+    
+    // ✅ Getter for access (if needed)
+    public Photo getPhoto() {
+        return photo;
+    }
+    
+    // ✅ Behavior instead of just getters
+    public void showPhotoInformation() {
+        System.out.println("Photo: " + photo.getImage() + " (" + photo.getFormat() + ")");
+    }
+    
+    // ❌ NO setter - the photo is created with the passport
+    // public void setPhoto(Photo photo) { ... }  // Don't do this!
+}
+```
+
+#### Bidirectional Association
+
+**Requirements:**
+1. **Attributes:** Both classes have a reference to each other
+2. **Setters:** Methods that maintain bidirectionality automatically
+3. **Getters:** Access to the reference
+4. **Behavior:** Methods that use the relationship without exposing internal navigation
+
+**Example:**
+```java
+public class Owner {
+    private String name;
+    private String idNumber;
+    private Passport passport;  // Bidirectional association
+    
+    public Owner(String name, String idNumber) {
+        this.name = name;
+        this.idNumber = idNumber;
+    }
+    
+    // ✅ Setter that maintains bidirectionality
+    public void setPassport(Passport passport) {
+        this.passport = passport;
+        if (passport != null && passport.getOwner() != this) {
+            passport.setOwner(this);
+        }
+    }
+    
+    // ✅ Getter for access
+    public Passport getPassport() {
+        return passport;
+    }
+    
+    // ✅ Behavior that encapsulates navigation
+    public void showCompleteInformation() {
+        System.out.println("Owner: " + name + " - ID: " + idNumber);
+        if (passport != null) {
+            passport.showPhotoInformation();
+        }
+    }
+}
+
+public class Passport {
+    private String number;
+    private String issueDate;
+    private Owner owner;  // Bidirectional association
+    private Photo photo;
+    
+    public Passport(String number, String issueDate, String image, String format) {
+        this.number = number;
+        this.issueDate = issueDate;
+        this.photo = new Photo(image, format);
+    }
+    
+    // ✅ Setter that maintains bidirectionality
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+        if (owner != null && owner.getPassport() != this) {
+            owner.setPassport(this);
+        }
+    }
+    
+    // ✅ Getter for access
+    public Owner getOwner() {
+        return owner;
+    }
+}
+```
+
+#### Contained Class (in Composition)
+
+**Requirements:**
+1. **Simplicity:** Only manages its own state
+2. **No external references:** Doesn't know its container
+3. **Basic Getters/Setters:** For its own state only
+
+**Example:**
+```java
+public class Photo {
+    private String image;
+    private String format;
+    
+    // ✅ Only manages its own state
+    public Photo(String image, String format) {
+        this.image = image;
+        this.format = format;
+    }
+    
+    // Basic getters/setters
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
+    
+    public String getFormat() { return format; }
+    public void setFormat(String format) { this.format = format; }
+}
+```
+
+### Best Practices for Main/Client Code
+
+#### Avoid Encapsulation Violations
+
+```java
+// ❌ Avoid getter chains
+String photoImage = owner.getPassport().getPhoto().getImage();
+
+// ✅ Use behavior
+owner.showCompleteInformation();
+```
+
+#### Verify Relationship Integrity
+
+```java
+// ✅ Verify bidirectionality
+boolean isBidirectional = (passport.getOwner() == owner && owner.getPassport() == passport);
+System.out.println("Bidirectionality correct? " + (isBidirectional ? "✅ YES" : "❌ NO"));
+```
+
+### UML Diagram Criteria
+
+#### Correct Symbols
+
+- **Composition:** ◆—→ (filled diamond, directional arrow)
+- **Bidirectional:** ←—→ (arrows on both ends)
+- **Multiplicity:** 1:1 on both ends
+
+#### Methods to Include
+
+- **Constructors:** With appropriate parameters for each relationship type
+- **Getters/Setters:** For associations
+- **Behavior:** Methods that encapsulate navigation logic
+
+### Implementation Checklist
+
+#### ✅ Structure
+
+- [ ] Composition implemented correctly (object created in constructor)
+- [ ] Bidirectionality implemented and maintained automatically
+- [ ] No direct relationships not specified in the design
+
+#### ✅ Behavior
+
+- [ ] Methods that implement "Tell, Don't Ask"
+- [ ] Encapsulation of navigation between objects
+- [ ] Bidirectionality verification in Main/tests
+
+#### ✅ UML Diagram
+
+- [ ] Correct symbols (◆ for composition, ←→ for bidirectional)
+- [ ] Behavior methods included
+- [ ] Constructors updated according to relationships
+
+**Guiding Principle:** Maintain the integrity of specified relationships while applying OOP best practices.
+
 ## Summary
 
 These best practices aim to build software systems that are robust, flexible, easy to understand, and maintain over time, distributing responsibilities logically among objects.

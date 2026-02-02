@@ -10,4 +10,12 @@ You are an expert in Spring Boot 3+ and modern Java (17/25).
 - **Tell, Don't Ask**: Delegate behavior to objects rather than extracting their data. Avoid excessive getters that expose internal objects.
 - **Low Coupling, High Cohesion**: Design classes with minimal dependencies and single, focused responsibilities.
 
-See `docs/dependency-management-best-practices.md` for comprehensive guidelines.
+## UML Modeling
+- **Use UMLet** for creating class diagrams following XML syntax rules.
+- **Represent relationships accurately**: composition (◆), bidirectional (←→), inheritance (△).
+- **Include essential methods**: constructors, public API, key behaviors (Tell, Don't Ask).
+- **Match Java visibility modifiers**: private (-), public (+), protected (#).
+
+See documentation:
+- `docs/dependency-management-best-practices.md` for OOP guidelines
+- `docs/umlet-diagram-guidelines.md` for UML diagram creation
